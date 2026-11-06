@@ -1,0 +1,153 @@
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 28px 18px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: #6251e8;
+    margin: 8px 10px 12px;
+}
+
+.sidebar-role {
+    margin: 0 10px 35px;
+    color: #888;
+    font-size: 13px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.sidebar-link:hover {
+    background: #f1efff;
+    color: #6251e8;
+}
+
+.sidebar-link.active {
+    background: #6251e8;
+    color: white;
+    box-shadow: 0 4px 12px rgba(98, 81, 232, 0.2);
+}
+
+.sidebar-icon {
+    font-size: 19px;
+}
+
+.sidebar-logout {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #dc3545;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+}
+
+.sidebar-logout:hover {
+    background: #fff0f0;
+}
+
+.dashboard-layout {
+    min-height: 100vh;
+}
+
+.dashboard-main {
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        padding: 12px 14px;
+        box-sizing: border-box;
+    }
+
+    .sidebar-logo {
+        font-size: 21px;
+        margin: 0 8px 4px;
+    }
+
+    .sidebar-role {
+        margin: 0 8px 12px;
+        font-size: 12px;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+    }
+
+    .sidebar-link {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 9px 11px;
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .sidebar-icon {
+        font-size: 15px;
+    }
+
+    .sidebar-logout {
+        margin-top: 5px;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    .dashboard-main {
+        margin-left: 0;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+}

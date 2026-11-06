@@ -1,0 +1,470 @@
+.my-applications {
+    min-height: 100vh;
+    padding: 40px 7%;
+    background: #f5f7fc;
+    color: #25304a;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.applications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.applications-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 10px;
+    color: #243b80;
+}
+
+.applications-header p {
+    color: #52617c;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.back-button {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s ease;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.25);
+}
+
+.application-filters {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0 28px;
+    flex-wrap: wrap;
+}
+
+.application-filters button {
+    padding: 10px 22px;
+    border: 1px solid #dce2f0;
+    border-radius: 22px;
+    background: white;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.application-filters button:hover,
+.application-filters button.active {
+    background: #5546e8;
+    color: white;
+    border-color: #5546e8;
+}
+
+.application-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    padding: 24px;
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #5268d8;
+    box-shadow: 0 5px 18px rgba(30, 45, 90, 0.05);
+    transition: 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(30, 45, 90, 0.09);
+}
+
+.stat-card span {
+    color: #52617c;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    margin: 14px 0 0;
+    font-weight: 800;
+    color: #4f46e5;
+}
+
+.pending-stat {
+    border-left-color: #e6a23c;
+}
+
+.pending-stat h2 {
+    color: #d97706;
+}
+
+.accepted-stat {
+    border-left-color: #26a269;
+}
+
+.accepted-stat h2 {
+    color: #16a34a;
+}
+
+.rejected-stat {
+    border-left-color: #e05252;
+}
+
+.rejected-stat h2 {
+    color: #dc2626;
+}
+
+.applications-content {
+    background: white;
+    padding: 28px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(30, 45, 90, 0.05);
+}
+
+.applications-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.applications-section-header h2 {
+    font-size: 22px;
+    color: #243b80;
+    margin: 0;
+}
+
+.applications-section-header span {
+    color: #52617c;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.application-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.application-card {
+    padding: 23px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+    transition: 0.3s ease;
+}
+
+.application-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(30, 45, 90, 0.08);
+    border-color: #cbd3f5;
+}
+
+.application-card-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.company-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #edf0ff;
+    color: #5546e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.application-job-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.application-job-info h3 {
+    font-size: 17px;
+    margin: 0 0 6px;
+    color: #243b80;
+}
+
+.application-job-info p {
+    color: #52617c;
+    font-size: 14px;
+    margin: 0;
+}
+
+.status-badge {
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.pending {
+    background: #fff4dc;
+    color: #b77916;
+}
+
+.status-badge.accepted {
+    background: #e3f7ed;
+    color: #218653;
+}
+
+.status-badge.rejected {
+    background: #fde8e8;
+    color: #ce4545;
+}
+
+.application-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    border-top: 1px solid #edf0f5;
+    margin-top: 22px;
+    padding-top: 18px;
+}
+
+.detail-label {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.application-details p {
+    margin: 7px 0 0;
+    color: #35415e;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.empty-applications,
+.applications-message {
+    text-align: center;
+    padding: 55px 20px;
+    color: #52617c;
+    line-height: 1.7;
+}
+
+.empty-applications h3 {
+    color: #243b80;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    color: #d33;
+}
+
+@media (max-width: 900px) {
+    .application-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .my-applications {
+        padding: 25px 5%;
+    }
+
+    .applications-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .applications-header h1 {
+        font-size: 26px;
+    }
+
+    .application-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .applications-content {
+        padding: 18px;
+    }
+
+    .application-card {
+        padding: 18px;
+    }
+
+    .application-card-top {
+        flex-wrap: wrap;
+    }
+
+    .status-badge {
+        margin-left: auto;
+    }
+
+    .application-details {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .applications-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .my-applications *,
+    .my-applications *::before,
+    .my-applications *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .my-applications {
+        padding: 25px 5%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .applications-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .applications-header h1 {
+        font-size: 27px;
+    }
+
+    .applications-header p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .back-button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .application-filters {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .application-filters button {
+        width: 100%;
+        padding: 11px 8px;
+        font-size: 13px;
+        box-sizing: border-box;
+    }
+
+    .application-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .stat-card {
+        padding: 18px 14px;
+    }
+
+    .stat-card span {
+        font-size: 12px;
+    }
+
+    .stat-card h2 {
+        font-size: 27px;
+    }
+
+    .applications-content {
+        padding: 18px;
+    }
+
+    .applications-section-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .applications-section-header h2 {
+        font-size: 19px;
+    }
+
+    .application-card {
+        padding: 16px;
+    }
+
+.application-card-top {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 12px;
+    row-gap: 10px;
+    align-items: center;
+}
+
+.company-icon {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.application-job-info {
+    grid-column: 2;
+    min-width: 0;
+}
+
+.application-job-info h3 {
+    font-size: 16px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.application-job-info p {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.status-badge {
+    grid-column: 2;
+    justify-self: start;
+    margin: 0;
+}
+
+    .application-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}

@@ -1,0 +1,29 @@
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+**/target/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local configuration
+**/application-local.properties
+
+# IDE files
+.vscode/
+.idea/
+**/.settings/
+**/.classpath
+**/.project
+
+# OS files
+.DS_Store
+Thumbs.db
