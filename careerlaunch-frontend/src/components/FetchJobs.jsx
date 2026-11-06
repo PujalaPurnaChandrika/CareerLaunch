@@ -45,8 +45,16 @@ return (
                     <p> {role === "RECRUITER" ? "Post and manage job opportunities." : "Discover roles that match your career interests."} </p>
                 </div>
 
-                <button className="jobs-back-button" onClick={() => navigate( role === "RECRUITER" ? "/recruiter-dashboard" : "/job-seeker-dashboard" )} >
-                    ← Back to Dashboard
+                <button className="jobs-back-button" onClick={() => {
+                        if (role === "RECRUITER") {
+                            navigate("/recruiter-dashboard")
+                        } else if (role === "JOB_SEEKER") {
+                            navigate("/job-seeker-dashboard")
+                        } else {
+                            navigate("/")
+                        }
+                }}>
+                     {role ? "← Back to Dashboard" : "← Back to Home"}
                 </button>
             </header>
 

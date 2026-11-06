@@ -10,7 +10,7 @@ const Sidebar = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('role')
         localStorage.removeItem('email')
-        navigate('/login')
+        navigate('/')
     }
 
     const seekerLinks = [

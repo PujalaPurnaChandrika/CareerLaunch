@@ -21,6 +21,29 @@ CareerLaunch is a full-stack job portal application that connects job seekers wi
 - Accept or reject applications
 - Track application statuses
 
+## Screenshots
+
+### Home Page
+![Home Page](screenshots/home.png)
+
+### Explore Jobs – Guest View
+![Explore Jobs](screenshots/explore-jobs.png)
+
+### Job Seeker Job Listing
+![Job Details](screenshots/job-details.png)
+
+### Job Seeker Dashboard
+![Job Seeker Dashboard](screenshots/job-seeker-dashboard.png)
+
+### My Applications
+![My Applications](screenshots/my-applications.png)
+
+### Recruiter Dashboard
+![Recruiter Dashboard](screenshots/recruiter-dashboard.png)
+
+### Manage Applications
+![Manage Applications](screenshots/manage-applications.png)
+
 ## Technologies Used
 
 **Frontend:** React.js, JavaScript, HTML5, CSS3, Axios, React Router
@@ -46,7 +69,17 @@ CareerLaunch/
 │   ├── package.json
 │   └── vite.config.js
 │
-└── .gitignore
+├── screenshots/
+│   ├── home.png
+│   ├── explore-jobs.png
+│   ├── job-details.png
+│   ├── job-seeker-dashboard.png
+│   ├── my-applications.png
+│   ├── recruiter-dashboard.png
+│   └── manage-applications.png
+│
+├── .gitignore
+└── README.md
 ```
 
 ## Getting Started
@@ -61,6 +94,7 @@ CareerLaunch/
 
 ```bash
 git clone https://github.com/PujalaPurnaChandrika/CareerLaunch.git
+cd CareerLaunch
 ```
 
 ### 2. Configure the Database
@@ -95,7 +129,7 @@ npm install
 npm run dev
 ```
 
-Frontend URL: `http://localhost:5173`
+Frontend URL: `http://localhost:5173` (or the port displayed by Vite).
 
 ## Authentication and Security
 
