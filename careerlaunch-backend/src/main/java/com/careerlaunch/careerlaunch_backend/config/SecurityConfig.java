@@ -1,97 +1,170 @@
+
 package com.careerlaunch.careerlaunch_backend.config;
 
+import java.util.List;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import javax.crypto.SecretKey;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
-
 @Configuration
 public class SecurityConfig {
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
 
-	@Bean
-	public JwtDecoder jwtDecoder(
-	    @Value("${app.jwt.secret}") String secret) {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
 
-	    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+        CorsConfiguration configuration = new CorsConfiguration();
 
-	    return NimbusJwtDecoder.withSecretKey(key)
-	            .macAlgorithm(MacAlgorithm.HS256)
-	            .build();
-	}
-	
-	@Bean
-	public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "https://career-launch-livid.vercel.app"
+        ));
 
-	    JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        configuration.setAllowedMethods(List.of(
+            "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
+        ));
 
-	    authoritiesConverter.setAuthoritiesClaimName("role");
-	    authoritiesConverter.setAuthorityPrefix("ROLE_");
+        configuration.setAllowedHeaders(List.of(
+            HttpHeaders.AUTHORIZATION,
+            HttpHeaders.CONTENT_TYPE
+        ));
 
-	    JwtAuthenticationConverter converter =
-	            new JwtAuthenticationConverter();
-                 converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
-	    return converter;
-	}
-	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
 
-	    http
-	        .csrf(csrf -> csrf.disable())
-	        .cors(cors -> {})
-	        .sessionManagement(session ->
-	            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	        .oauth2ResourceServer(oauth2 ->
-	        oauth2.jwt(jwt -> jwt
-	            .decoder(jwtDecoder)
-	            .jwtAuthenticationConverter(jwtAuthenticationConverter())
-	        )
-	        )
+        source.registerCorsConfiguration("/**", configuration);
 
-.authorizeHttpRequests(auth -> auth
-    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        return source;
+    }
 
-    .requestMatchers(HttpMethod.POST, "/api/users/register", "/api/users/login").permitAll()
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    .requestMatchers(HttpMethod.GET, "/api/jobs", "/api/jobs/**").permitAll()
+    @Bean
+    public JwtDecoder jwtDecoder(
+            @Value("${app.jwt.secret}") String secret) {
 
-    .requestMatchers(HttpMethod.POST, "/api/jobs").hasRole("RECRUITER")
+        SecretKey key =
+                Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
 
-    .requestMatchers(HttpMethod.PUT,"/api/jobs/**").hasRole("RECRUITER")
+        return NimbusJwtDecoder.withSecretKey(key)
+                .macAlgorithm(MacAlgorithm.HS256)
+                .build();
+    }
 
-    .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").hasRole("RECRUITER")
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
 
-    .requestMatchers(HttpMethod.POST, "/api/applications/*/apply").hasRole("JOB_SEEKER")
+        JwtGrantedAuthoritiesConverter authoritiesConverter =
+                new JwtGrantedAuthoritiesConverter();
 
-    .requestMatchers(HttpMethod.GET, "/api/applications/my-applications").hasRole("JOB_SEEKER")
+        authoritiesConverter.setAuthoritiesClaimName("role");
+        authoritiesConverter.setAuthorityPrefix("ROLE_");
 
-    .requestMatchers(HttpMethod.GET, "/api/applications/recruiter-applications").hasRole("RECRUITER")
+        JwtAuthenticationConverter converter =
+                new JwtAuthenticationConverter();
 
-    .requestMatchers(HttpMethod.PATCH, "/api/applications/*/status").hasRole("RECRUITER")
+        converter.setJwtGrantedAuthoritiesConverter(
+                authoritiesConverter);
 
-    .anyRequest().authenticated()
-);
-	    return http.build();
-	}
+        return converter;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtDecoder jwtDecoder) throws Exception {
+
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> {})
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(
+                    SessionCreationPolicy.STATELESS))
+            .oauth2ResourceServer(oauth2 ->
+                oauth2.jwt(jwt -> jwt
+                    .decoder(jwtDecoder)
+                    .jwtAuthenticationConverter(
+                        jwtAuthenticationConverter())
+                )
+            )
+            .authorizeHttpRequests(auth -> auth
+
+                .requestMatchers(
+                    HttpMethod.OPTIONS, "/**").permitAll()
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/users/register",
+                    "/api/users/login").permitAll()
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/jobs",
+                    "/api/jobs/**").permitAll()
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/jobs").hasRole("RECRUITER")
+
+                .requestMatchers(
+                    HttpMethod.PUT,
+                    "/api/jobs/**").hasRole("RECRUITER")
+
+                .requestMatchers(
+                    HttpMethod.DELETE,
+                    "/api/jobs/**").hasRole("RECRUITER")
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/applications/*/apply")
+                    .hasRole("JOB_SEEKER")
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/applications/my-applications")
+                    .hasRole("JOB_SEEKER")
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/applications/recruiter-applications")
+                    .hasRole("RECRUITER")
+
+                .requestMatchers(
+                    HttpMethod.PATCH,
+                    "/api/applications/*/status")
+                    .hasRole("RECRUITER")
+
+                .anyRequest().authenticated()
+            );
+
+        return http.build();
+    }
 }
