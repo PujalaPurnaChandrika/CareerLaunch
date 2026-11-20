@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = "http://localhost:8080/api"
+const url = "https://careerlaunch-backend-dz9q.onrender.com/api"
 
 const api = axios.create({
     baseURL: url
