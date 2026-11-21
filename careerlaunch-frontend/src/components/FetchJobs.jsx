@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchJobs } from '../services/api'
@@ -10,14 +11,25 @@ const FetchJobs = () => {
 
     const [jobs, setJobs] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState('')
 
     async function getJobs() {
         try {
-            let det = await fetchJobs()
+            setIsLoading(true)
+            setError('')
+
+            const det = await fetchJobs()
             setJobs(det)
+
             console.log(det)
+
         } catch (error) {
             console.log("Error fetching jobs:", error)
+            setError('Unable to load jobs. Please try again.')
+
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -28,7 +40,6 @@ const FetchJobs = () => {
     const role = localStorage.getItem("role")
 
     const filteredJobs = jobs.filter((job) => {
-
         return (
             job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             job.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,16 +47,27 @@ const FetchJobs = () => {
         )
     })
 
-return (
+    return (
         <div className="jobs-page">
 
             <header className="jobs-header">
                 <div className="jobs-header-content">
-                    <h1>{role === "RECRUITER" ? "Career Opportunities" : "Explore Opportunities"}</h1>
-                    <p> {role === "RECRUITER" ? "Post and manage job opportunities." : "Discover roles that match your career interests."} </p>
+                    <h1>
+                        {role === "RECRUITER"
+                            ? "Career Opportunities"
+                            : "Explore Opportunities"}
+                    </h1>
+
+                    <p>
+                        {role === "RECRUITER"
+                            ? "Post and manage job opportunities."
+                            : "Discover roles that match your career interests."}
+                    </p>
                 </div>
 
-                <button className="jobs-back-button" onClick={() => {
+                <button
+                    className="jobs-back-button"
+                    onClick={() => {
                         if (role === "RECRUITER") {
                             navigate("/recruiter-dashboard")
                         } else if (role === "JOB_SEEKER") {
@@ -53,8 +75,9 @@ return (
                         } else {
                             navigate("/")
                         }
-                }}>
-                     {role ? "← Back to Dashboard" : "← Back to Home"}
+                    }}
+                >
+                    {role ? "← Back to Dashboard" : "← Back to Home"}
                 </button>
             </header>
 
@@ -63,15 +86,34 @@ return (
             )}
 
             <div className="job-search">
-                <input type="text" placeholder="Search by job title, company or location..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Search by job title, company or location..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
 
                 {searchTerm && (
-                    <button onClick={() => setSearchTerm("")}> Clear </button>
+                    <button onClick={() => setSearchTerm("")}>
+                        Clear
+                    </button>
                 )}
-
             </div>
 
-            {filteredJobs.length === 0 && searchTerm ? (
+            {isLoading ? (
+
+                <div className="empty-message">
+                    Loading jobs... Please wait.
+                </div>
+
+            ) : error ? (
+
+                <div className="empty-message">
+                    {error}
+                    <button onClick={getJobs}>Try Again</button>
+                </div>
+
+            ) : filteredJobs.length === 0 && searchTerm ? (
 
                 <div className="empty-message">
                     No matching jobs found. Try another search.
@@ -79,7 +121,10 @@ return (
 
             ) : (
 
-                <JobDetails details={filteredJobs} onJobChanged={getJobs} />
+                <JobDetails
+                    details={filteredJobs}
+                    onJobChanged={getJobs}
+                />
 
             )}
 
